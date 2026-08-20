@@ -1,11 +1,9 @@
 // api/_email.js
-// Envia o e-mail de confirmacao de pagamento via SMTP (nodemailer).
-// Variaveis de ambiente necessarias na Vercel:
-//   SMTP_HOST      ex: smtp.gmail.com
-//   SMTP_PORT      ex: 465 (SSL) ou 587 (STARTTLS)
-//   SMTP_USER      seu usuario/e-mail de envio
-//   SMTP_PASS      senha ou senha de app (Gmail exige "senha de app", nao a senha normal)
-//   SMTP_FROM      opcional, remetente exibido (default: SMTP_USER)
+// Envia o e-mail de confirmacao de pagamento via Gmail SMTP (nodemailer).
+// Variaveis de ambiente usadas (ja configuradas na Vercel):
+//   GMAIL_USER            e-mail do Gmail usado para enviar
+//   GMAIL_APP_PASSWORD    senha de app do Gmail (nao e a senha normal da conta)
+//   EMAIL_REMETENTE_NOME  nome exibido como remetente (opcional)
 //
 // IMPORTANTE: o envio nunca deve derrubar a confirmacao do pagamento.
 // Qualquer erro aqui e apenas logado, nunca lancado para quem chamou.
@@ -55,15 +53,13 @@ async function enviarEmailConfirmacao(data) {
   try {
     if (!data || !data.email) return
 
-    const host = process.env.SMTP_HOST
-    const port = parseInt(process.env.SMTP_PORT || '465', 10)
-    const user = process.env.SMTP_USER
-    const pass = process.env.SMTP_PASS
-    const from = process.env.SMTP_FROM || user
+    const user = process.env.GMAIL_USER
+    const pass = process.env.GMAIL_APP_PASSWORD
+    const nomeRemetente = process.env.EMAIL_REMETENTE_NOME || "L'Oréal Paris"
 
-    if (!host || !user || !pass) {
-      // Sem SMTP configurado: nao envia, mas nao quebra o fluxo de pagamento
-      console.log('[_email] SMTP nao configurado, pulando envio para', data.email)
+    if (!user || !pass) {
+      // Sem Gmail configurado: nao envia, mas nao quebra o fluxo de pagamento
+      console.log('[_email] GMAIL_USER/GMAIL_APP_PASSWORD nao configurados, pulando envio para', data.email)
       return
     }
 
@@ -72,14 +68,12 @@ async function enviarEmailConfirmacao(data) {
     const nodemailer = require('nodemailer')
 
     const transporter = nodemailer.createTransport({
-      host: host,
-      port: port,
-      secure: port === 465, // true para 465 (SSL), false para 587 (STARTTLS)
+      service: 'gmail',
       auth: { user: user, pass: pass },
     })
 
     await transporter.sendMail({
-      from: from,
+      from: `"${nomeRemetente}" <${user}>`,
       to: data.email,
       subject: 'Pagamento confirmado - seu pedido está a caminho!',
       html: montarHtml(data),
