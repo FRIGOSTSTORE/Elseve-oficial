@@ -23,8 +23,24 @@ module.exports = async function handler(req, res) {
     return
   }
 
-  if (String(q.secret || '') !== segredo) {
-    res.status(403).json({ ok: false, error: 'Segredo invalido.' })
+  const segredoEsperado = segredo.trim()
+  const segredoRecebido = String(q.secret || '').trim()
+
+  if (segredoRecebido !== segredoEsperado) {
+    // Modo debug: nunca expoe os valores, so o suficiente pra achar a diferenca
+    res.status(403).json({
+      ok: false,
+      error: 'Segredo invalido.',
+      debug: {
+        tamanho_esperado: segredoEsperado.length,
+        tamanho_recebido: segredoRecebido.length,
+        esperado_tem_espacos_nas_pontas: segredo !== segredoEsperado,
+        recebido_comeca_com: segredoRecebido.slice(0, 2),
+        recebido_termina_com: segredoRecebido.slice(-2),
+        esperado_comeca_com: segredoEsperado.slice(0, 2),
+        esperado_termina_com: segredoEsperado.slice(-2),
+      },
+    })
     return
   }
 
