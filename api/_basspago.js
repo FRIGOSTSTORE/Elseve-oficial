@@ -329,13 +329,19 @@ async function sendUtmify(status, data) {
   }
 
   try {
-    await fetch('https://api.utmify.com.br/api-credentials/orders', {
+    const resp = await fetch('https://api.utmify.com.br/api-credentials/orders', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'x-api-token': CONFIG.utmifyToken },
       body: JSON.stringify(body),
     })
+
+    if (!resp.ok) {
+      const texto = await resp.text().catch(function () { return '' })
+      console.error('[UTMify] falhou status=' + status + ' http=' + resp.status + ' resposta=' + texto + ' body=' + JSON.stringify(body))
+    }
   } catch (e) {
     // tracking nunca deve derrubar o pagamento
+    console.error('[UTMify] erro de rede status=' + status + ':', e.message)
   }
 }
 
