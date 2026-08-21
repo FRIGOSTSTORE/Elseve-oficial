@@ -72,7 +72,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>L'Oréal Paris | Resgate Exclusivo</title>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    
+
     <style>
         :root {
             --white: #FFFFFF;
@@ -100,9 +100,9 @@
             display: flex; align-items: center; justify-content: center;
             animation: fadeOut 1s ease 1.5s forwards;
         }
-        .cinema-intro .logo-anim { 
-            font-family: 'Cinzel'; letter-spacing: 15px; color: #000; 
-            animation: tracking-in 1.2s cubic-bezier(0.215, 0.610, 0.355, 1.000) both; 
+        .cinema-intro .logo-anim {
+            font-family: 'Cinzel'; letter-spacing: 15px; color: #000;
+            animation: tracking-in 1.2s cubic-bezier(0.215, 0.610, 0.355, 1.000) both;
             font-size: 24px; text-align: center;
         }
         @keyframes fadeOut { to { opacity: 0; pointer-events: none; } }
@@ -142,7 +142,7 @@
         .product-card:active { transform: scale(0.98); border-color: var(--accent-purple); }
 
         .product-card img { width: 100%; height: 160px; object-fit: contain; margin-bottom: 12px; }
-        
+
         .stars { color: var(--gold); font-size: 10px; margin-bottom: 6px; display: flex; align-items: center; gap: 2px; }
         .reviews-text { font-size: 9px; color: #777; margin-left: 4px; font-family: 'Poppins'; }
 
@@ -179,34 +179,11 @@
         }
     </style>
 </head>
-
-
-
-    ... 
-    <!-- resto do conteúdo da página, produtos, etc -->
-
-    <script>
-      (function() {
-        var currentParams = window.location.search;
-        function redirectComUtm(destino) {
-          if (currentParams) {
-            var separator = destino.includes('?') ? '&' : '?';
-            destino = destino + separator + currentParams.substring(1);
-          }
-          location.href = destino;
-        }
-        window.redirectComUtm = redirectComUtm;
-      })();
-    </script>
-  </body>
-</html>
-        
 <body>
 
     <div class="cinema-intro">
         <div class="logo-anim">L’ORÉAL<br><span style="font-size: 10px; letter-spacing: 5px;">PARIS</span></div>
     </div>
-
 
     <header><div class="brand">L’ORÉAL</div></header>
 
@@ -216,7 +193,7 @@
 
     <div class="container">
         <div class="section-header"><h2>Coleção Collagen Lifter</h2></div>
-        
+
         <div class="product-grid">
             <div class="product-card">
                 <img src="https://www.loreal-paris.com.br/-/media/project/loreal/brand-sites/oap/americas/br/products/hair/hair-care/elseve/2025/collagen-lifter/packs/collagen-lifter-shampoo-200ml-v2.png">
@@ -224,7 +201,7 @@
                 <h3 class="product-name">Shampoo Reestruturador 200ml</h3>
                 <p class="description">Limpeza profunda com preenchimento.</p>
                 <div class="price-box"><span class="old-price">R$ 34,90</span><span class="new-price">R$ 0,00</span></div>
-                <button class="btn-resgate" onclick="redirectComUtm('/elseve/produtos/produto1'">Resgatar Agora</button>
+                <button class="btn-resgate" onclick="redirectComUtm('/elseve/produtos/produto1')">Resgatar Agora</button>
             </div>
             <div class="product-card">
                 <img src="https://www.loreal-paris.com.br/-/media/project/loreal/brand-sites/oap/americas/br/products/hair/hair-care/elseve/2025/collagen-lifter/packs/collagen-lifter-tratamento-300g-v2.png">
@@ -232,7 +209,7 @@
                 <h3 class="product-name">Máscara Plástica Capilar 300g</h3>
                 <p class="description">Tratamento intensivo molecular.</p>
                 <div class="price-box"><span class="old-price">R$ 52,90</span><span class="new-price">R$ 0,00</span></div>
-                <button class="btn-resgate" onclick="redirectComUtm('/elseve/produtos/produto2'">Resgatar Agora</button>
+                <button class="btn-resgate" onclick="redirectComUtm('/elseve/produtos/produto2')">Resgatar Agora</button>
             </div>
             <div class="product-card">
                 <img src="https://http2.mlstatic.com/D_Q_NP_668012-MLB103937527202_012026-F.webp">
@@ -240,7 +217,7 @@
                 <h3 class="product-name">Kit Premium Collagen Full</h3>
                 <p class="description">Kit completo de resgate capilar.</p>
                 <div class="price-box"><span class="old-price">R$ 138,00</span><span class="new-price">R$ 0,00</span></div>
-                <button class="btn-resgate" onclick="redirectComUtm('/elseve/produtos/produto4'">Resgatar Agora</button>
+                <button class="btn-resgate" onclick="redirectComUtm('/elseve/produtos/produto4')">Resgatar Agora</button>
             </div>
             <div class="product-card">
                 <img src="/img/Cxk58Kd9-shopping-1-removebg-preview.png" fetchpriority="high" decoding="async" loading="eager">
@@ -248,7 +225,7 @@
                 <h3 class="product-name">Duo Molecular Advanced</h3>
                 <p class="description">Reparação para danos químicos.</p>
                 <div class="price-box"><span class="old-price">R$ 96,00</span><span class="new-price">R$ 0,00</span></div>
-                <button class="btn-resgate" onclick="redirectComUtm('/elseve/produtos/produto3'">Resgatar Agora</button>
+                <button class="btn-resgate" onclick="redirectComUtm('/elseve/produtos/produto3')">Resgatar Agora</button>
             </div>
         </div>
     </div>
@@ -259,7 +236,7 @@
 
     <div class="container">
         <div class="section-header"><h2>Liso dos Sonhos</h2></div>
-        
+
         <div class="product-grid">
             <div class="product-card">
                 <img src="https://www.loreal-paris.com.br/-/media/project/loreal/brand-sites/oap/americas/br/products/hair/hair-care/elseve/2025/liso-dos-sonhos/shampoo/200ml/imagem-liso-dos-sonhos-200ml-packsho.png">
@@ -267,7 +244,7 @@
                 <h3 class="product-name">Shampoo Liso Prolongado</h3>
                 <p class="description">Alinhamento total sem frizz.</p>
                 <div class="price-box"><span class="old-price">R$ 32,90</span><span class="new-price">R$ 0,00</span></div>
-                <button class="btn-resgate" onclick="redirectComUtm('/elseve/produtos/produto5'">Resgatar Agora</button>
+                <button class="btn-resgate" onclick="redirectComUtm('/elseve/produtos/produto5')">Resgatar Agora</button>
             </div>
             <div class="product-card">
                 <img src="https://www.drogasil.com.br/_next/image?url=https%3A%2F%2Fproduct-data.raiadrogasil.io%2Fimages%2F14976906.webp&w=640&q=75">
@@ -275,7 +252,7 @@
                 <h3 class="product-name">Kit Liso dos Sonhos Expert</h3>
                 <p class="description">Liso perfeito por até 7 dias.</p>
                 <div class="price-box"><span class="old-price">R$ 144,00</span><span class="new-price">R$ 0,00</span></div>
-                <button class="btn-resgate" onclick="redirectComUtm('/elseve/produtos/produto6'">Resgatar Agora</button>
+                <button class="btn-resgate" onclick="redirectComUtm('/elseve/produtos/produto6')">Resgatar Agora</button>
             </div>
             <div class="product-card">
                 <img src="https://www.loreal-paris.com.br/-/media/project/loreal/brand-sites/oap/americas/br/products/hair/hair-care/elseve/2025/liso-dos-sonhos/serum/serum-liso-por-1-semana.png">
@@ -283,7 +260,7 @@
                 <h3 class="product-name">Serum Anti-Frizz Gloss</h3>
                 <p class="description">Brilho espelhado e proteção.</p>
                 <div class="price-box"><span class="old-price">R$ 64,00</span><span class="new-price">R$ 0,00</span></div>
-                <button class="btn-resgate" onclick="redirectComUtm('/elseve/produtos/produto7'">Resgatar Agora</button>
+                <button class="btn-resgate" onclick="redirectComUtm('/elseve/produtos/produto7')">Resgatar Agora</button>
             </div>
             <div class="product-card">
                 <img src="/img/0QT2rRPJ-creme-para-pentear-elseve-liso-dos-sonhos-250ml-97671-1-12a35ca16ba0e77b6820a21273691568-removebg-pr.png" fetchpriority="high" decoding="async" loading="eager">
@@ -291,7 +268,7 @@
                 <h3 class="product-name">Creme Alinhamento Térmico</h3>
                 <p class="description">Proteção contra fontes de calor.</p>
                 <div class="price-box"><span class="old-price">R$ 42,90</span><span class="new-price">R$ 0,00</span></div>
-                <button class="btn-resgate" onclick="redirectComUtm('/elseve/produtos/produto8'">Resgatar Agora</button>
+                <button class="btn-resgate" onclick="redirectComUtm('/elseve/produtos/produto8')">Resgatar Agora</button>
             </div>
         </div>
     </div>
@@ -320,8 +297,21 @@
             <span>Privacidade</span> | <span>Termos</span> | <span>Ajuda</span>
         </div>
         <div style="font-size: 9px; opacity: 0.5;">© 2026 L'Oréal Paris. Todos os direitos reservados.</div>
-    </header>
+    </footer>
 
+    <script>
+      (function() {
+        var currentParams = window.location.search;
+        function redirectComUtm(destino) {
+          if (currentParams) {
+            var separator = destino.includes('?') ? '&' : '?';
+            destino = destino + separator + currentParams.substring(1);
+          }
+          location.href = destino;
+        }
+        window.redirectComUtm = redirectComUtm;
+      })();
+    </script>
 
 </body>
 </html>
