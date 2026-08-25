@@ -28,7 +28,28 @@ module.exports = async function handler(req, res) {
       const txid = String(pix.txid || '').replace(/[^a-zA-Z0-9]/g, '')
       if (!txid) continue
 
+      // Dono do pedido, checagem 1: prefixo do txid.
+      // A conta BassPago e compartilhada com outros projetos (Norisk,
+      // ajude-main) e o webhook e por conta, nao por produto - um txid sem
+      // o prefixo deste projeto e de outro produto e nao deve ser
+      // processado aqui.
+      const prefixo = String(bp.CONFIG.txidPrefix || 'ELV')
+      if (txid.slice(0, prefixo.length).toLowerCase() !== prefixo.toLowerCase()) {
+        console.log('[webhook] txid=' + txid + ' nao pertence a este projeto (prefixo != ' + prefixo + '), ignorando')
+        continue
+      }
+
       const txData = await bp.loadTx(txid)
+
+      // Dono do pedido, checagem 2: o pedido precisa existir no registro
+      // local. Mesmo com o prefixo certo, sem isso um txid nunca gerado
+      // por este projeto seria processado e reportado pra UTMify mesmo
+      // assim. loadTx() retorna {} (objeto vazio) quando nao encontra -
+      // por isso a checagem e por chaves, nao so por truthy.
+      if (!txData || Object.keys(txData).length === 0) {
+        console.log('[webhook] txid=' + txid + ' tem prefixo certo mas nao existe no registro local, ignorando')
+        continue
+      }
 
       // Idempotencia: nao processa o mesmo pagamento duas vezes
       if (txData && txData.status === 'paid') continue
