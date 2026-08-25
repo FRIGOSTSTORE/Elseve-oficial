@@ -24,6 +24,13 @@ const CONFIG = {
   nomeProduto: process.env.NOME_PRODUTO || 'Produto X',
   idProduto: process.env.ID_PRODUTO || 'PROD01',
   expiracao: parseInt(process.env.EXPIRACAO_PIX || '3600', 10),
+  // Esta conta BassPago e compartilhada com outros projetos (Norisk,
+  // ajude-main). O webhook e por conta, nao por produto, entao qualquer
+  // projeto pode receber notificacao de txid de outro. Este prefixo e
+  // gravado no inicio de todo txid gerado por ESTE projeto
+  // (generate_pix.js) e conferido no webhook (webhook.js) antes de
+  // processar qualquer pagamento - mesmo padrao do prefixo NRK do Norisk.
+  txidPrefix: process.env.TXID_PREFIX || 'ELV',
 }
 
 // ---------------------------------------------------------------------------
@@ -192,6 +199,24 @@ async function apiRequest(method, pathname, body) {
 // ---------------------------------------------------------------------------
 function criarCobranca(dados) {
   return apiRequest('POST', '/cob', dados)
+}
+
+// Cria cobranca com txid definido por NOS (em vez de deixar o BassPago
+// sortear), obrigatorio para conseguirmos prefixar o txid por projeto.
+function criarCobrancaComTxid(txid, dados) {
+  if (!/^[a-zA-Z0-9]{26,35}$/.test(txid)) {
+    throw new Error('txid invalido: deve conter 26 a 35 caracteres alfanumericos.')
+  }
+  return apiRequest('PUT', '/cob/' + txid, dados)
+}
+
+// Gera um txid comecando com CONFIG.txidPrefix, 32 caracteres alfanumericos
+// no total (dentro da faixa 26-35 exigida pelo BassPago).
+function gerarTxid() {
+  const prefixo = String(CONFIG.txidPrefix || 'ELV').replace(/[^a-zA-Z0-9]/g, '') || 'ELV'
+  const restante = 32 - prefixo.length
+  const aleatorio = crypto.randomBytes(Math.ceil(restante / 2)).toString('hex').slice(0, restante)
+  return prefixo + aleatorio
 }
 
 function consultarCobranca(txid) {
@@ -454,6 +479,8 @@ function extrairCopiaECola(resp) {
 module.exports = {
   CONFIG: CONFIG,
   criarCobranca: criarCobranca,
+  criarCobrancaComTxid: criarCobrancaComTxid,
+  gerarTxid: gerarTxid,
   consultarCobranca: consultarCobranca,
   configurarWebhook: configurarWebhook,
   consultarWebhook: consultarWebhook,
