@@ -45,9 +45,12 @@ module.exports = async function handler(req, res) {
       }
     }
 
-    const resposta = await bp.criarCobranca(cobranca)
+    // Gera o proprio txid com prefixo do projeto (conta BassPago
+    // compartilhada com outros projetos) - ver comentario em CONFIG.txidPrefix.
+    const txidGerado = bp.gerarTxid()
+    const resposta = await bp.criarCobrancaComTxid(txidGerado, cobranca)
     const copyPaste = bp.extrairCopiaECola(resposta)
-    const txid = resposta.txid || null
+    const txid = resposta.txid || txidGerado
 
     if (!copyPaste || !txid) {
       res.status(502).json({
